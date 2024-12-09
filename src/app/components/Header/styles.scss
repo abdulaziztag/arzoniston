@@ -1,0 +1,9 @@
+.app-header--container {
+  @apply border-b border-b-gray-100 dark:border-b-gray-800
+  bg-white dark:bg-gray-950
+  fixed top-0 left-0 w-full h-16 z-10;
+}
+
+.app-header {
+  @apply flex h-full items-center max-w-screen-md mx-auto gap-x-2 px-4
+}

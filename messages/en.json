@@ -7,5 +7,32 @@
   "months": "months",
   "years": "years",
   "ago": "ago",
-  "call": "Call"
+  "call": "Call",
+  "filters": "Filters",
+  "ads": "Ads",
+
+  "selectBody": "Select car body",
+  "Sedan": "Sedan",
+  "Truck": "Truck",
+  "SUV": "SUV",
+  "Crossover": "Crossover",
+  "Hatchback": "Hatchback",
+  "Convertible": "Convertible",
+  "Wagon": "Wagon",
+  "Van": "Van",
+
+  "selectStatus": "Select status",
+  "Available": "Available",
+  "Sold": "Sold",
+
+  "selectTransmission": "Select transmission",
+  "Front-Wheel Drive": "Front-Wheel Drive",
+  "Rear-Wheel Drive": "Rear-Wheel Drive",
+  "All-Wheel Drive": "All-Wheel Drive",
+
+  "selectFuel": "Select fuel",
+  "Gasoline": "Gasoline",
+  "Diesel": "Diesel",
+  "Electric": "Electric",
+  "Hybrid": "Hybrid"
 }

@@ -21,6 +21,3 @@ export function formatTimeDifference(date: string): {diff: number; key: string} 
     return {diff: diffInYears, key: "years"};
   }
 }
-
-const result = formatTimeDifference("2024-12-08T21:01:02.098801Z");
-console.log(result);

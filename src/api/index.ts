@@ -1,28 +1,33 @@
-import { BASE_URL, endpoints } from "@/api/endpoints";
+import { endpoints } from "@/api/endpoints";
 import type {
   CarAdvertisementDetailResponse,
   CarAdvertisementResponse,
 } from "@/api/types";
 import type { IPagination } from "@/interfaces/common";
+import {fetchServer} from "@/api/fetchServer";
 
-export const getCarAdvertisements = async () => {
+export type GetCarAdsParams = {
+  body_type?: string;
+}
+
+export const getCarAdvertisements = async ({params}: {params?: GetCarAdsParams}) => {
   try {
-    const response = await fetch(BASE_URL + endpoints.carAdvertisements);
-    const carAdvertisements = await response.json();
-    return carAdvertisements as Promise<IPagination<CarAdvertisementResponse>>;
+    const response = await fetchServer(endpoints.carAdvertisements, {
+      params,
+    });
+    return response as Promise<IPagination<CarAdvertisementResponse>>;
   } catch (error) {
+    console.error(error);
     throw new Response("Server error", { status: 500 });
   }
 };
 
 export const getCarAdvertisementDetail = async (adId: string) => {
   try {
-    const response = await fetch(
-      BASE_URL + endpoints.advertisementDetail(adId),
-    );
-    const carAdvertisement = await response.json();
-    return carAdvertisement as Promise<CarAdvertisementDetailResponse>;
+    const response = await fetchServer(endpoints.advertisementDetail(adId));
+    return response as Promise<CarAdvertisementDetailResponse>;
   } catch (error) {
+    console.error(error);
     throw new Response("Not Found", { status: 404 });
   }
 };

@@ -7,5 +7,32 @@
   "months": "ой",
   "years": "йил",
   "ago": "аввал",
-  "call": "Қўнғироқ қилиш"
+  "call": "Қўнғироқ қилиш",
+  "filters": "Филтрлар",
+  "ads": "Эълонлар",
+
+  "selectBody": "Машина тури",
+  "Sedan": "Седан",
+  "Truck": "Юк машинаси",
+  "SUV": "SUV",
+  "Crossover": "Кроссовер",
+  "Hatchback": "Ҳетчбек",
+  "Convertible": "Кабриолет",
+  "Wagon": "Вагон",
+  "Van": "Фургон",
+
+  "selectStatus": "Ҳолатни танланг",
+  "Available": "Мавжуд",
+  "Sold": "Сотилган",
+
+  "selectTransmission": "Привод танланг",
+  "Front-Wheel Drive": "Олд ғилдиракли ҳайдов",
+  "Rear-Wheel Drive": "Орқа ғилдиракли ҳайдов",
+  "All-Wheel Drive": "Барча ғилдиракли ҳайдов",
+
+  "selectFuel": "Йонилги танланг",
+  "Gasoline": "Бензин",
+  "Diesel": "Дизель",
+  "Electric": "Электр",
+  "Hybrid": "Гибрид"
 }

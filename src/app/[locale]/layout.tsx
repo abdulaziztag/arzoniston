@@ -32,9 +32,9 @@ export default async function LocaleLayout(
     params
   }: Readonly<{
     children: ReactNode;
-    params: { locale: Locale };
+    params: Promise<{locale: string}>;
   }>) {
-  const { locale } = await params
+  const { locale } = await params;
   if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
@@ -46,12 +46,12 @@ export default async function LocaleLayout(
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-    <NextIntlClientProvider messages={messages}>
       <Provider>
+       <NextIntlClientProvider messages={messages} locale={locale}>
         <AppHeader/>
         <div className="max-w-screen-md mx-auto px-4 pt-20">{children}</div>
+       </NextIntlClientProvider>
       </Provider>
-    </NextIntlClientProvider>
     </body>
     </html>
   );

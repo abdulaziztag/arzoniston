@@ -7,5 +7,32 @@
   "months": "месяц(а/ев)",
   "years": "год(а/лет)",
   "ago": "назад",
-  "call": "Позвонить"
+  "call": "Позвонить",
+  "filters": "Фильтры",
+  "ads": "Объявления",
+
+  "selectBody": "Выберите тип кузова",
+  "Sedan": "Седан",
+  "Truck": "Грузовик",
+  "SUV": "Внедорожник",
+  "Crossover": "Кроссовер",
+  "Hatchback": "Хэтчбек",
+  "Convertible": "Кабриолет",
+  "Wagon": "Универсал",
+  "Van": "Фургон",
+
+  "selectStatus": "Выберите статус",
+  "Available": "Доступен",
+  "Sold": "Продан",
+
+  "selectTransmission": "Выберите трансмиссию",
+  "Front-Wheel Drive": "Передний привод",
+  "Rear-Wheel Drive": "Задний привод",
+  "All-Wheel Drive": "Полный привод",
+
+  "selectFuel": "Выберите топливо",
+  "Gasoline": "Бензин",
+  "Diesel": "Дизель",
+  "Electric": "Электро",
+  "Hybrid": "Гибрид"
 }

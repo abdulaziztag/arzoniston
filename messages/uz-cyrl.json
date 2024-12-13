@@ -34,5 +34,9 @@
   "Gasoline": "Бензин",
   "Diesel": "Дизель",
   "Electric": "Электр",
-  "Hybrid": "Гибрид"
+  "Hybrid": "Гибрид",
+
+  "choose-brand": "Маркани танланг",
+  "choose-model": "Моделни танланг",
+  "sort": "Саралаш"
 }

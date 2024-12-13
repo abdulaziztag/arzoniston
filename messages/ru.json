@@ -34,5 +34,9 @@
   "Gasoline": "Бензин",
   "Diesel": "Дизель",
   "Electric": "Электро",
-  "Hybrid": "Гибрид"
+  "Hybrid": "Гибрид",
+
+  "choose-brand": "Выберите марку",
+  "choose-model": "Выберите модель",
+  "sort": "Сортировать"
 }

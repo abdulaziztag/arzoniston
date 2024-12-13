@@ -34,5 +34,9 @@
   "Gasoline": "Benzin",
   "Diesel": "Dizel",
   "Electric": "Elektr",
-  "Hybrid": "Gibrid"
+  "Hybrid": "Gibrid",
+
+  "choose-brand": "Markani tanlang",
+  "choose-model": "Modelni tanlang",
+  "sort": "Saralash"
 }

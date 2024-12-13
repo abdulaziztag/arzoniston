@@ -1,7 +1,7 @@
 import { endpoints } from "@/api/endpoints";
-import type {
+import {
   CarAdvertisementDetailResponse,
-  CarAdvertisementResponse,
+  CarAdvertisementResponse, CarBrandsResponse, CarModelsResponse,
 } from "@/api/types";
 import type { IPagination } from "@/interfaces/common";
 import {fetchServer} from "@/api/fetchServer";
@@ -31,3 +31,23 @@ export const getCarAdvertisementDetail = async (adId: string) => {
     throw new Response("Not Found", { status: 404 });
   }
 };
+
+export const getCarModels = async () => {
+  try {
+    const response = await fetchServer(endpoints.carModels);
+    return response as Promise<CarModelsResponse>;
+  } catch (error) {
+    console.error(error);
+    throw new Response("Server error", { status: 500 });
+  }
+}
+
+export const getCarBrands = async () => {
+  try {
+    const response = await fetchServer(endpoints.carBrands);
+    return response as Promise<CarBrandsResponse>;
+  } catch (error) {
+    console.error(error);
+    throw new Response("Server error", { status: 500 });
+  }
+}

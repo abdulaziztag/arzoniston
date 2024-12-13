@@ -56,3 +56,15 @@ export interface CarAdvertisementDetailResponse extends ITimestamps {
   }[];
   body_type: string;
 }
+
+export type CommonName = {
+  id: number;
+  name: string;
+}
+
+export type CarBrandsResponse = Array<CommonName>
+
+export type CarModelsResponse = Array<
+  CommonName &
+  { company: CommonName; }
+>

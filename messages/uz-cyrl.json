@@ -10,7 +10,6 @@
   "call": "Қўнғироқ қилиш",
   "filters": "Филтрлар",
   "ads": "Эълонлар",
-
   "selectBody": "Машина тури",
   "Sedan": "Седан",
   "Truck": "Юк машинаси",
@@ -20,23 +19,43 @@
   "Convertible": "Кабриолет",
   "Wagon": "Вагон",
   "Van": "Фургон",
-
   "selectStatus": "Ҳолатни танланг",
   "Available": "Мавжуд",
   "Sold": "Сотилган",
-
   "selectTransmission": "Привод танланг",
   "Front-Wheel Drive": "Олд ғилдиракли ҳайдов",
   "Rear-Wheel Drive": "Орқа ғилдиракли ҳайдов",
   "All-Wheel Drive": "Барча ғилдиракли ҳайдов",
-
   "selectFuel": "Йонилги танланг",
   "Gasoline": "Бензин",
   "Diesel": "Дизель",
   "Electric": "Электр",
   "Hybrid": "Гибрид",
-
   "choose-brand": "Маркани танланг",
   "choose-model": "Моделни танланг",
-  "sort": "Саралаш"
+  "sort": "Саралаш",
+  "sortOptions": {
+    "priceAsc": "Нарх: Арзонидан қимматга",
+    "priceDesc": "Нарх: Қимматдан арзонга",
+    "newest": "Энг янги",
+    "oldest": "Энг ески",
+    "mileageAsc": "Ўрган масофа: Камдан кўпга",
+    "mileageDesc": "Ўрган масофа: Кўпдан камга"
+  },
+  "priceMin": "Минимал нарх",
+  "priceMax": "Максимал нарх",
+  "mileageMin": "Минимал юрган масофа",
+  "mileageMax": "Максимал юрган масофа",
+  "yearMin": "Минимал йил",
+  "yearMax": "Максимал йил",
+  "powerMin": "Минимал куч",
+  "powerMax": "Максимал куч",
+  "volumeMin": "Минимал ҳажм",
+  "volumeMax": "Максимал ҳажм",
+  "sunroof": "Панорама",
+  "apply": "Қўллаш",
+  "reset": "Тиклаш",
+  "cancel": "Бекор қилиш",
+  "exist": "Мавжуд",
+  "notExist": "Мавжуд емас"
 }

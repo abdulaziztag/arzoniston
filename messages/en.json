@@ -10,7 +10,6 @@
   "call": "Call",
   "filters": "Filters",
   "ads": "Ads",
-
   "selectBody": "Select car body",
   "Sedan": "Sedan",
   "Truck": "Truck",
@@ -20,23 +19,43 @@
   "Convertible": "Convertible",
   "Wagon": "Wagon",
   "Van": "Van",
-
   "selectStatus": "Select status",
   "Available": "Available",
   "Sold": "Sold",
-
   "selectTransmission": "Select transmission",
   "Front-Wheel Drive": "Front-Wheel Drive",
   "Rear-Wheel Drive": "Rear-Wheel Drive",
   "All-Wheel Drive": "All-Wheel Drive",
-
   "selectFuel": "Select fuel",
   "Gasoline": "Gasoline",
   "Diesel": "Diesel",
   "Electric": "Electric",
   "Hybrid": "Hybrid",
-
   "choose-brand": "Choose brand",
   "choose-model": "Choose model",
-  "sort": "Sort"
+  "sort": "Sort",
+  "sortOptions": {
+    "priceAsc": "Price: Low to High",
+    "priceDesc": "Price: High to Low",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "mileageAsc": "Mileage: Low to High",
+    "mileageDesc": "Mileage: High to Low"
+  },
+  "priceMin": "Price min",
+  "priceMax": "Price max",
+  "mileageMin": "Mileage min",
+  "mileageMax": "Mileage max",
+  "yearMin": "Year min",
+  "yearMax": "Year max",
+  "powerMin": "Power min",
+  "powerMax": "Power max",
+  "volumeMin": "Volume min",
+  "volumeMax": "Volume max",
+  "sunroof": "Sunroof",
+  "apply": "Apply",
+  "reset": "Reset",
+  "cancel": "Cancel",
+  "exist": "Exist",
+  "notExist": "Not exist"
 }

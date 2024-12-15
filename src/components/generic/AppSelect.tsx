@@ -7,6 +7,7 @@ import {
   SelectValueText,
   SelectItem,
 } from '@/components/ui/select';
+import { useTranslations } from 'next-intl';
 
 interface CustomSelectProps<T> {
   options: { label: string; value: T }[];
@@ -20,6 +21,7 @@ interface CustomSelectProps<T> {
   className?: string;
   clearable?: boolean;
   width?: number;
+  translate?: boolean;
 }
 
 export function AppSelect<T>({
@@ -32,7 +34,9 @@ export function AppSelect<T>({
   variant = 'outline',
   width,
   clearable,
+  translate = false,
 }: CustomSelectProps<T>) {
+  const t = useTranslations();
   const collection = createListCollection({ items: options });
 
   return (
@@ -45,13 +49,16 @@ export function AppSelect<T>({
         void onChange(filterKey, event.target.value);
       }}
     >
-      <SelectTrigger width={width} className="mr-1 w-full" clearable={clearable}>
-        <SelectValueText placeholder={placeholder} />
+      <SelectTrigger width={width} className="w-full" clearable={clearable}>
+        <SelectValueText
+          translatable={translate}
+          placeholder={translate ? t(placeholder) : placeholder}
+        />
       </SelectTrigger>
       <SelectContent>
         {options.map((item) => (
           <SelectItem item={item} key={item.value as string}>
-            {item.label}
+            {translate ? t(item.label) : item.label}
           </SelectItem>
         ))}
       </SelectContent>

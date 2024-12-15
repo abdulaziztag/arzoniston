@@ -10,7 +10,6 @@
   "call": "Qo'ng'iroq qilish",
   "filters": "Filtrlar",
   "ads": "E'lonlar",
-
   "selectBody": "Mashina turi",
   "Sedan": "Sedan",
   "Truck": "Yuk mashinasi",
@@ -20,23 +19,43 @@
   "Convertible": "Kabriolet",
   "Wagon": "Vagon",
   "Van": "Furgon",
-
   "selectStatus": "Holatni tanlang",
   "Available": "Mavjud",
   "Sold": "Sotilgan",
-
   "selectTransmission": "Privod tanlang",
   "Front-Wheel Drive": "Old g‘ildirakli haydov",
   "Rear-Wheel Drive": "Orqa g‘ildirakli haydov",
   "All-Wheel Drive": "Barcha g‘ildirakli haydov",
-
   "selectFuel": "Yonilg'i tanlang",
   "Gasoline": "Benzin",
   "Diesel": "Dizel",
   "Electric": "Elektr",
   "Hybrid": "Gibrid",
-
   "choose-brand": "Markani tanlang",
   "choose-model": "Modelni tanlang",
-  "sort": "Saralash"
+  "sort": "Saralash",
+  "sortOptions": {
+    "priceAsc": "Narx: Arzonidan qimmatga",
+    "priceDesc": "Narx: Qimmatdan arzonga",
+    "newest": "Eng yangi",
+    "oldest": "Eng eski",
+    "mileageAsc": "Yurgan masofa: Kamdan ko‘pga",
+    "mileageDesc": "Yurgan masofa: Ko‘pdan kamga"
+  },
+  "priceMin": "Minimal narx",
+  "priceMax": "Maksimal narx",
+  "mileageMin": "Minimal yurgan masofa",
+  "mileageMax": "Maksimal yurgan masofa",
+  "yearMin": "Minimal yil",
+  "yearMax": "Maksimal yil",
+  "powerMin": "Minimal kuch",
+  "powerMax": "Maksimal kuch",
+  "volumeMin": "Minimal hajm",
+  "volumeMax": "Maksimal hajm",
+  "sunroof": "Panorama",
+  "apply": "Qo'llash",
+  "reset": "Tiklash",
+  "cancel": "Bekor qilish",
+  "exist": "Mavjud",
+  "notExist": "Mavjud emas"
 }

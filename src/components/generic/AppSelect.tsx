@@ -1,4 +1,3 @@
-import React, { ChangeEvent } from 'react';
 import { createListCollection } from '@ark-ui/react'; // Replace with actual utility import
 import {
   SelectRoot,
@@ -22,6 +21,9 @@ interface CustomSelectProps<T> {
   clearable?: boolean;
   width?: number;
   translate?: boolean;
+  value?: string[];
+  size?: 'sm' | 'md' | 'lg';
+  multiple?: boolean;
 }
 
 export function AppSelect<T>({
@@ -35,18 +37,24 @@ export function AppSelect<T>({
   width,
   clearable,
   translate = false,
+  value,
+  multiple,
+  size,
 }: CustomSelectProps<T>) {
   const t = useTranslations();
   const collection = createListCollection({ items: options });
 
   return (
     <SelectRoot
+      size={size}
+      multiple={multiple}
       variant={variant}
+      value={value}
       disabled={disabled}
       className={`flex w-1/2 flex-row ${className}`}
       collection={collection}
-      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-        void onChange(filterKey, event.target.value);
+      onValueChange={(value) => {
+        void onChange(filterKey, value.value[0]);
       }}
     >
       <SelectTrigger width={width} className="w-full" clearable={clearable}>

@@ -1,11 +1,12 @@
 'use client';
 
-import { Heading } from '@chakra-ui/react';
+import { Heading, Icon, IconButton } from '@chakra-ui/react';
 import { redirect } from 'next/navigation';
 import './styles.scss';
 import { LangChanger } from '@/app/components/LangChanger';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 export const AppHeader = () => {
   const t = useTranslations();
@@ -16,9 +17,11 @@ export const AppHeader = () => {
         <Heading as="h1" className="cursor-pointer" fontSize="2xl" onClick={() => redirect('/')}>
           Arzoniston
         </Heading>
-        <Button onClick={() => (window.location.href = 'https://t.me/manopov')}>
-          {t('postAd')}
-        </Button>
+        <IconButton rounded="full" onClick={() => (window.location.href = 'https://t.me/manopov')}>
+          <Icon>
+            <AiOutlinePlus />
+          </Icon>
+        </IconButton>
       </div>
     </header>
   );

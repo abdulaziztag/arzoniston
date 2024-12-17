@@ -11,6 +11,7 @@ import {
   ENGINE_TYPE_SELECT,
   ordering,
   STATUS_SELECT,
+  TRANSMISSION_SELECT,
 } from '@/constants/filters';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -31,7 +32,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { MdClose } from 'react-icons/md';
 
 export default function CarAdvertisementList({
   carAdvertisements,
@@ -46,13 +46,14 @@ export default function CarAdvertisementList({
   const [carAds, setCarAds] = useState<CarAdvertisementResponse[]>(carAdvertisements);
   const [carModels, setCarModels] = useState<{ label: string; value: string }[]>([]);
   const [adsLoading, setAdsLoading] = useState(false);
+  const [brand, setBrand] = useState<string | undefined>(undefined);
+  const [model, setModel] = useState<string | undefined>(undefined);
   const [filters, setFilters] = useState<Record<string, string | undefined>>({
     body_type: undefined,
     transmission: undefined,
+    drive_type: undefined,
     engine_type: undefined,
     status: undefined,
-    company_id: undefined,
-    car_model_id: undefined,
     price_min: undefined,
     price_max: undefined,
     year_min: undefined,
@@ -70,7 +71,7 @@ export default function CarAdvertisementList({
 
   useEffect(() => {
     void requestAd();
-  }, [sort]);
+  }, [sort, model, brand]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters({
@@ -80,11 +81,7 @@ export default function CarAdvertisementList({
     console.log(key, value);
   };
 
-  const handleBrandSelect = async (key: string, value: string) => {
-    setFilters({
-      ...filters,
-      [key]: value,
-    });
+  const handleBrandSelect = async (value: string) => {
     const carAdvertisements = await fetch(
       'http://128.199.31.140:8477' + endpoints.carModels + `?brand=${value}`,
       {
@@ -110,7 +107,9 @@ export default function CarAdvertisementList({
       'http://128.199.31.140:8477' +
         endpoints.carAdvertisements +
         objectToUrlParams(filters) +
-        (sort ? `&sort=${sort}` : ''),
+        (sort ? `&sort=${sort}` : '') +
+        (brand ? `&company_id=${brand}` : '') +
+        (model ? `&car_model_id=${model}` : ''),
       {
         headers: {
           'Accept-Language': locale,
@@ -133,7 +132,10 @@ export default function CarAdvertisementList({
           }))}
           className="w-full"
           placeholder={t('choose-brand')}
-          onChange={handleBrandSelect}
+          onChange={async (_key, value) => {
+            setBrand(value);
+            await handleBrandSelect(value);
+          }}
           filterKey={'company_id'}
           clearable
         />
@@ -141,8 +143,10 @@ export default function CarAdvertisementList({
           options={carModels}
           placeholder={t('choose-model')}
           className="w-full"
-          disabled={!carModels.length || !filters.company_id}
-          onChange={handleFilterChange}
+          disabled={!carModels.length || !brand}
+          onChange={async (_key, value) => {
+            setModel(value);
+          }}
           filterKey={'car_model_id'}
           clearable
         />
@@ -179,12 +183,20 @@ export default function CarAdvertisementList({
                 />
                 <AppSelect
                   translate
-                  value={filters.transmission ? [filters.transmission] : []}
-                  options={DRIVE_TYPE_SELECT}
-                  placeholder="selectTransmission"
                   className="w-full"
+                  options={TRANSMISSION_SELECT}
+                  placeholder="selectTransmission"
                   onChange={handleFilterChange}
                   filterKey={'transmission'}
+                />
+                <AppSelect
+                  translate
+                  value={filters.transmission ? [filters.transmission] : []}
+                  options={DRIVE_TYPE_SELECT}
+                  placeholder="selectDriveType"
+                  className="w-full"
+                  onChange={handleFilterChange}
+                  filterKey={'drive_type'}
                   clearable
                 />
                 <AppSelect
@@ -338,33 +350,6 @@ export default function CarAdvertisementList({
           filterKey="sort"
         />
       </div>
-      <Flex gapX={2}>
-        {Object.keys(filters).map(
-          (key) =>
-            filters[key] && (
-              <div
-                key={key}
-                className="flex items-center gap-x-2 rounded-md border px-2 py-1 capitalize"
-              >
-                <p>
-                  {key}: {filters[key]}
-                </p>
-                <Icon
-                  className="cursor-pointer"
-                  onClick={async () => {
-                    setFilters((prev) => ({
-                      ...prev,
-                      [key]: '',
-                    }));
-                    await requestAd();
-                  }}
-                >
-                  <MdClose />
-                </Icon>
-              </div>
-            ),
-        )}
-      </Flex>
       {adsLoading ? (
         <Flex className="mt-4 w-full justify-center">
           <ProgressCircleRoot value={null} size="sm">
@@ -376,7 +361,7 @@ export default function CarAdvertisementList({
           <Card.Root
             onClick={() => router.push('/cars/' + ad.id)}
             key={ad.id}
-            className="transition-shadow hover:cursor-pointer hover:shadow-2xl hover:shadow-amber-900"
+            className="transition-all hover:cursor-pointer hover:bg-gray-900"
           >
             <Card.Header>
               <Card.Title>
@@ -397,8 +382,8 @@ export default function CarAdvertisementList({
                 )}
               </Flex>
               <Flex gap="2" wrap="wrap" className="&[span]:capitalize">
-                <span>{ad.mileage} km</span> ·<span>{ad.engine_type}</span> ·
-                <span>{ad.transmission}</span> ·<span>{ad.color_name}</span>
+                <span>{ad.mileage} km</span> ·<span>{t(ad.engine_type)}</span> ·
+                <span>{t(ad.transmission)}</span> ·<span>{ad.color_name}</span>
               </Flex>
               <Flex>
                 <span className="text-sm text-gray-400">
@@ -410,14 +395,6 @@ export default function CarAdvertisementList({
           </Card.Root>
         ))
       )}
-      <Flex className="fixed bottom-0 left-0 right-0 bg-gray-900 py-4">
-        <Button
-          className="mx-auto w-full max-w-screen-md"
-          onClick={() => (window.location.href = 'https://t.me/manopov')}
-        >
-          {t('postAd')}
-        </Button>
-      </Flex>
     </Flex>
   );
 }

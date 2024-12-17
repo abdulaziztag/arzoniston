@@ -1,30 +1,35 @@
 export const BODY_TYPE_SELECT = [
-  { value: 'sedan', label: 'Sedan' },
-  { value: 'truck', label: 'Truck' },
+  { value: 'sedan', label: 'sedan' },
+  { value: 'truck', label: 'truck' },
   { value: 'suv', label: 'SUV' },
-  { value: 'crossover', label: 'Crossover' },
-  { value: 'hatchback', label: 'Hatchback' },
-  { value: 'convertible', label: 'Convertible' },
-  { value: 'wagon', label: 'Wagon' },
-  { value: 'van', label: 'Van' },
+  { value: 'crossover', label: 'crossover' },
+  { value: 'hatchback', label: 'hatchback' },
+  { value: 'convertible', label: 'convertible' },
+  { value: 'wagon', label: 'wagon' },
+  { value: 'van', label: 'van' },
+];
+
+export const TRANSMISSION_SELECT = [
+  { value: 'automatic', label: 'automatic' },
+  { value: 'manual', label: 'manual' },
 ];
 
 export const STATUS_SELECT = [
-  { value: 'available', label: 'Available' },
-  { value: 'sold', label: 'Sold' },
+  { value: 'available', label: 'available' },
+  { value: 'sold', label: 'sold' },
 ];
 
 export const DRIVE_TYPE_SELECT = [
-  { value: 'front', label: 'Front-Wheel Drive' },
-  { value: 'rear', label: 'Rear-Wheel Drive' },
-  { value: 'all', label: 'All-Wheel Drive' },
+  { value: 'front', label: 'front-wheel' },
+  { value: 'rear', label: 'rear-wheel' },
+  { value: 'all', label: 'all-wheel' },
 ];
 
 export const ENGINE_TYPE_SELECT = [
-  { value: 'gasoline', label: 'Gasoline' },
-  { value: 'diesel', label: 'Diesel' },
-  { value: 'electric', label: 'Electric' },
-  { value: 'hybrid', label: 'Hybrid' },
+  { value: 'gasoline', label: 'gasoline' },
+  { value: 'diesel', label: 'diesel' },
+  { value: 'electric', label: 'electric' },
+  { value: 'hybrid', label: 'hybrid' },
 ];
 
 export const ordering = [

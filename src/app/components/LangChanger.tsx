@@ -19,7 +19,7 @@ export const LangChanger = () => {
 
   return (
     <SelectRoot defaultValue={[locale]} className="flex w-fit flex-row" collection={languages}>
-      <SelectTrigger className="w-40">
+      <SelectTrigger className="w-16">
         <SelectValueText placeholder={t('selectLanguage')} />
       </SelectTrigger>
       <SelectContent>
@@ -39,9 +39,9 @@ export const LangChanger = () => {
 
 const languages = createListCollection({
   items: [
-    { label: 'English', value: 'en' },
-    { label: 'Русский', value: 'ru' },
-    { label: 'O`zbekcha', value: 'uz' },
-    { label: 'Ўзбекча', value: 'uz-cyrl' },
+    { label: 'En', value: 'en' },
+    { label: 'Ру', value: 'ru' },
+    { label: 'O`z', value: 'uz' },
+    { label: 'Ўз', value: 'uz-cyrl' },
   ],
 });

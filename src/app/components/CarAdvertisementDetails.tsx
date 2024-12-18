@@ -49,6 +49,8 @@ export const CarAdvertisementDetails = ({
         />
         <InfoItem label={t('sunroof')} value={t(carAdvertisement.sunroof ? 'exist' : 'notExist')} />
         <InfoItem label={t('status')} value={t(carAdvertisement.status)} />
+      </Card.Root>
+      <div className="flex w-full flex-col items-center gap-y-4 overflow-auto">
         <iframe src="https://t.me/suvtekinn/6688?embed=1" width="400" height="300"></iframe>
         <iframe
           width="320"
@@ -56,7 +58,7 @@ export const CarAdvertisementDetails = ({
           src="https://www.instagram.com/p/DABNaRoK5Za/embed/"
           frameBorder="0"
         ></iframe>
-      </Card.Root>
+      </div>
       <Flex className="fixed bottom-0 left-0 right-0 bg-gray-900 py-4">
         <Button
           className="mx-auto w-full max-w-screen-md"

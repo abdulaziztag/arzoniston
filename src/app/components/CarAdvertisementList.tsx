@@ -32,6 +32,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { useSearchParams } from 'next/navigation';
 
 export default function CarAdvertisementList({
   carAdvertisements,
@@ -40,6 +41,7 @@ export default function CarAdvertisementList({
   carAdvertisements: CarAdvertisementResponse[];
   carBrands: CommonName[];
 }) {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const locale = useLocale();
   const [modalState, setModalState] = useState(false);
@@ -49,26 +51,25 @@ export default function CarAdvertisementList({
   const [brand, setBrand] = useState<string | undefined>(undefined);
   const [model, setModel] = useState<string | undefined>(undefined);
   const [filters, setFilters] = useState<Record<string, string | undefined>>({
-    body_type: undefined,
-    transmission: undefined,
-    drive_type: undefined,
-    engine_type: undefined,
-    status: undefined,
-    price_min: undefined,
-    price_max: undefined,
-    year_min: undefined,
-    year_max: undefined,
-    volume_min: undefined,
-    volume_max: undefined,
-    mileage_min: undefined,
-    mileage_max: undefined,
-    power_min: undefined,
-    power_max: undefined,
-    sunroof: undefined,
+    body_type: searchParams.get('body_type') ?? undefined,
+    transmission: searchParams.get('transmission') ?? undefined,
+    drive_type: searchParams.get('drive_type') ?? undefined,
+    engine_type: searchParams.get('engine_type') ?? undefined,
+    status: searchParams.get('status') ?? undefined,
+    price_min: searchParams.get('price_min') ?? undefined,
+    price_max: searchParams.get('price_max') ?? undefined,
+    year_min: searchParams.get('year_min') ?? undefined,
+    year_max: searchParams.get('year_max') ?? undefined,
+    volume_min: searchParams.get('volume_min') ?? undefined,
+    volume_max: searchParams.get('volume_max') ?? undefined,
+    mileage_min: searchParams.get('mileage_min') ?? undefined,
+    mileage_max: searchParams.get('mileage_max') ?? undefined,
+    power_min: searchParams.get('power_min') ?? undefined,
+    power_max: searchParams.get('power_max') ?? undefined,
+    sunroof: searchParams.get('sunroof') ?? undefined,
   });
   const [sort, setSort] = useState('');
   const t = useTranslations();
-
   useEffect(() => {
     void requestAd();
   }, [sort, model, brand]);
@@ -78,7 +79,10 @@ export default function CarAdvertisementList({
       ...filters,
       [key]: value,
     });
-    console.log(key, value);
+    const params = new URLSearchParams(window.location.search);
+    if (value) params.set(key, value);
+    else params.delete(key);
+    window.history.pushState(null, '', `?${params.toString()}`);
   };
 
   const handleBrandSelect = async (value: string) => {
@@ -182,7 +186,9 @@ export default function CarAdvertisementList({
                   clearable
                 />
                 <AppSelect
+                  clearable
                   translate
+                  value={filters.transmission ? [filters.transmission] : []}
                   className="w-full"
                   options={TRANSMISSION_SELECT}
                   placeholder="selectTransmission"
@@ -191,7 +197,7 @@ export default function CarAdvertisementList({
                 />
                 <AppSelect
                   translate
-                  value={filters.transmission ? [filters.transmission] : []}
+                  value={filters.drive_type ? [filters.drive_type] : []}
                   options={DRIVE_TYPE_SELECT}
                   placeholder="selectDriveType"
                   className="w-full"

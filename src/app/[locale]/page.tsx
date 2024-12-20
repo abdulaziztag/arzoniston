@@ -1,11 +1,16 @@
-import { getCarAdvertisements, getCarBrands } from '@/api';
+import { getCarAdvertisements, getCarBrands, getPlaces } from '@/api';
 import CarAdvertisementList from '@/app/components/CarAdvertisementList';
 
 export default async function Home() {
   const carAdvertisements = await getCarAdvertisements({});
   const carBrands = await getCarBrands();
+  const carPlaces = await getPlaces();
 
   return (
-    <CarAdvertisementList carAdvertisements={carAdvertisements.results} carBrands={carBrands} />
+    <CarAdvertisementList
+      carPlaces={carPlaces}
+      carAdvertisements={carAdvertisements.results}
+      carBrands={carBrands}
+    />
   );
 }

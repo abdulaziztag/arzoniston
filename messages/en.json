@@ -76,5 +76,6 @@
   "volume": "Volume",
   "color": "Color",
   "gas": "Gas",
-  "status": "Status"
+  "status": "Status",
+  "selectCity": "Select city"
 }

@@ -22,7 +22,6 @@ import { ProgressCircleRing, ProgressCircleRoot } from '@/components/ui/progress
 import { VscSettings } from 'react-icons/vsc';
 
 import {
-  DialogActionTrigger,
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
@@ -33,13 +32,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useSearchParams } from 'next/navigation';
+import { formatWithSpaces } from '@/helpers/numParcer';
 
 export default function CarAdvertisementList({
   carAdvertisements,
   carBrands,
+  carPlaces,
 }: {
   carAdvertisements: CarAdvertisementResponse[];
   carBrands: CommonName[];
+  carPlaces: CommonName[];
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -51,6 +53,7 @@ export default function CarAdvertisementList({
   const [brand, setBrand] = useState<string | undefined>(undefined);
   const [model, setModel] = useState<string | undefined>(undefined);
   const [filters, setFilters] = useState<Record<string, string | undefined>>({
+    place_id: searchParams.get('places') ?? undefined,
     body_type: searchParams.get('body_type') ?? undefined,
     transmission: searchParams.get('transmission') ?? undefined,
     drive_type: searchParams.get('drive_type') ?? undefined,
@@ -87,7 +90,7 @@ export default function CarAdvertisementList({
 
   const handleBrandSelect = async (value: string) => {
     const carAdvertisements = await fetch(
-      'http://128.199.31.140:8477' + endpoints.carModels + `?brand=${value}`,
+      'http://128.199.31.140:8477' + endpoints.carModels + `?company_id=${value}`,
       {
         headers: {
           'Accept-Language': locale,
@@ -175,6 +178,18 @@ export default function CarAdvertisementList({
             </DialogHeader>
             <DialogBody className="flex justify-center">
               <div className="mb-4 grid max-w-screen-sm grow grid-cols-1 gap-2">
+                <AppSelect
+                  value={filters.place_id ? [filters.place_id] : []}
+                  options={carPlaces.map((place) => ({
+                    label: place.name,
+                    value: place.id.toString(),
+                  }))}
+                  placeholder={t('selectCity')}
+                  className="w-full"
+                  onChange={handleFilterChange}
+                  filterKey={'place_id'}
+                  clearable
+                />
                 <AppSelect
                   translate
                   value={filters.body_type ? [filters.body_type] : []}
@@ -331,11 +346,39 @@ export default function CarAdvertisementList({
             </DialogBody>
             <DialogFooter className="flex w-full justify-center">
               <div className="flex max-w-screen-sm grow gap-x-2">
-                <DialogActionTrigger asChild className="grow">
-                  <Button onClick={() => setModalState(false)} variant="outline">
-                    {t('cancel')}
-                  </Button>
-                </DialogActionTrigger>
+                <Button
+                  className="grow"
+                  onClick={async () => {
+                    setFilters({
+                      place_id: undefined,
+                      body_type: undefined,
+                      transmission: undefined,
+                      drive_type: undefined,
+                      engine_type: undefined,
+                      status: undefined,
+                      price_min: undefined,
+                      price_max: undefined,
+                      year_min: undefined,
+                      year_max: undefined,
+                      volume_min: undefined,
+                      volume_max: undefined,
+                      mileage_min: undefined,
+                      mileage_max: undefined,
+                      power_min: undefined,
+                      power_max: undefined,
+                      sunroof: undefined,
+                    });
+                    window.history.replaceState(null, '', window.location.pathname);
+                    await requestAd();
+                    setModalState(false);
+                  }}
+                  variant="outline"
+                >
+                  {t('reset')}
+                </Button>
+                <Button className="grow" onClick={() => setModalState(false)} variant="outline">
+                  {t('cancel')}
+                </Button>
                 <Button className="grow" onClick={requestAd}>
                   {t('apply')}
                 </Button>
@@ -373,7 +416,9 @@ export default function CarAdvertisementList({
               <Card.Title>
                 {ad.company_name} {ad.car_model_name}, {ad.year}
               </Card.Title>
-              <Card.Description fontWeight="bold">${ad.price}</Card.Description>
+              <Card.Description as="h2" fontWeight="bold">
+                ${formatWithSpaces(ad.price)}
+              </Card.Description>
             </Card.Header>
             <Card.Body>
               <Flex className="gap-x-2 overflow-auto rounded-lg pb-4">
@@ -388,7 +433,7 @@ export default function CarAdvertisementList({
                 )}
               </Flex>
               <Flex gap="2" wrap="wrap" className="&[span]:capitalize">
-                <span>{ad.mileage} km</span> ·<span>{t(ad.engine_type)}</span> ·
+                <span>{formatWithSpaces(ad.mileage)} km</span> ·<span>{t(ad.engine_type)}</span> ·
                 <span>{t(ad.transmission)}</span> ·<span>{ad.color_name}</span>
               </Flex>
               <Flex>

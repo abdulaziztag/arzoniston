@@ -9,9 +9,14 @@ import { AiOutlinePlus } from 'react-icons/ai';
 export const AppHeader = () => {
   return (
     <header className="app-header--container">
-      <div className="app-header">
+      <div className="app-header relative">
         <LangChanger />
-        <Heading as="h1" className="cursor-pointer" fontSize="2xl" onClick={() => redirect('/')}>
+        <Heading
+          as="h1"
+          className="absolute left-1/2 -translate-x-1/2 transform cursor-pointer"
+          fontSize="2xl"
+          onClick={() => redirect('/')}
+        >
           Arzoniston
         </Heading>
 

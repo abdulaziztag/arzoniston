@@ -1,4 +1,4 @@
-import type { ITimestamps } from "@/interfaces/common";
+import type { ITimestamps } from '@/interfaces/common';
 
 export interface CarAdvertisementResponse extends ITimestamps {
   id: number;
@@ -55,16 +55,17 @@ export interface CarAdvertisementDetailResponse extends ITimestamps {
     image: string;
   }[];
   body_type: string;
+  telegram_url: string;
+  instagram_url: string;
 }
 
 export type CommonName = {
   id: number;
   name: string;
-}
+};
 
-export type CarBrandsResponse = Array<CommonName>
+export type CarBrandsResponse = Array<CommonName>;
 
-export type CarModelsResponse = Array<
-  CommonName &
-  { company: CommonName; }
->
+export type CarModelsResponse = Array<CommonName & { company: CommonName }>;
+
+export type PlaceResponse = Array<CommonName>;

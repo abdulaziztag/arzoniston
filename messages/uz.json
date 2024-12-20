@@ -76,5 +76,6 @@
   "volume": "Hajm",
   "color": "Rang",
   "gas": "Gaz",
-  "status": "Holat"
+  "status": "Holat",
+  "selectCity": "Shaharni tanlang"
 }

@@ -1,21 +1,17 @@
-import { getLocale } from 'next-intl/server';
+import { objectToUrlParams } from '@/helpers/objToParams';
 import { BASE_URL } from '@/api/endpoints';
-
-const filteredParams = (params: Record<string, string>) =>
-  Object.fromEntries(Object.entries(params).filter(([_, value]) => value != null));
 
 export const fetchServer = async (
   url: string,
-  options: RequestInit & { params?: Record<string, string> } = {},
+  options: RequestInit & { params?: Record<string, string | undefined> } = {},
 ) => {
   try {
-    const locale = await getLocale();
-    const queryString = new URLSearchParams(filteredParams(options.params ?? {})).toString();
+    const queryString = objectToUrlParams(options.params ?? {});
     const modifiedOptions: RequestInit = {
       ...options,
       headers: {
         ...options.headers,
-        'Accept-Language': locale,
+        'Accept-Language': 'uz',
         'Content-Type': 'application/json',
       },
     };

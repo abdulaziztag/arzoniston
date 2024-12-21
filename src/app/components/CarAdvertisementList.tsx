@@ -15,9 +15,7 @@ import {
 } from '@/constants/filters';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
-import { endpoints } from '@/api/endpoints';
 import { AppSelect } from '@/components/generic/AppSelect';
-import { objectToUrlParams } from '@/helpers/objToParams';
 import { ProgressCircleRing, ProgressCircleRoot } from '@/components/ui/progress-circle';
 import { VscSettings } from 'react-icons/vsc';
 
@@ -33,6 +31,8 @@ import {
 } from '@/components/ui/dialog';
 import { useSearchParams } from 'next/navigation';
 import { formatWithSpaces } from '@/helpers/numParcer';
+import { useQuery } from '@tanstack/react-query';
+import { getCarAdvertisements, getCarModels } from '@/api';
 
 export default function CarAdvertisementList({
   carAdvertisements,
@@ -45,13 +45,16 @@ export default function CarAdvertisementList({
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const locale = useLocale();
   const [modalState, setModalState] = useState(false);
-  const [carAds, setCarAds] = useState<CarAdvertisementResponse[]>(carAdvertisements);
-  const [carModels, setCarModels] = useState<{ label: string; value: string }[]>([]);
-  const [adsLoading, setAdsLoading] = useState(false);
-  const [brand, setBrand] = useState<string | undefined>(undefined);
-  const [model, setModel] = useState<string | undefined>(undefined);
+  const [brand, setBrand] = useState<string | undefined>(
+    searchParams.get('company_id') ?? undefined,
+  );
+
+  const [model, setModel] = useState<string | undefined>(
+    searchParams.get('car_model_id') ?? undefined,
+  );
+  const [switcher, setSwitcher] = useState(false);
+
   const [filters, setFilters] = useState<Record<string, string | undefined>>({
     place_id: searchParams.get('places') ?? undefined,
     body_type: searchParams.get('body_type') ?? undefined,
@@ -73,9 +76,28 @@ export default function CarAdvertisementList({
   });
   const [sort, setSort] = useState('');
   const t = useTranslations();
+
+  const { data: carAdsFromQuery, isLoading: carAdsLoading } = useQuery({
+    queryKey: ['carAds', sort, model, brand, switcher],
+    queryFn: () =>
+      getCarAdvertisements({
+        params: { ...filters, sort: sort, company_id: brand, car_model_id: model },
+      }),
+    initialData: carAdvertisements,
+    refetchOnMount: false,
+  });
+
+  const { data: carModels, isFetched: carModelsFetched } = useQuery({
+    queryKey: ['carModels', brand],
+    queryFn: () => getCarModels(brand),
+    enabled: brand !== undefined,
+  });
+
   useEffect(() => {
-    void requestAd();
-  }, [sort, model, brand]);
+    if (carModels) {
+      setModel(searchParams.get('car_model_id') ?? undefined);
+    }
+  }, [carModels]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters({
@@ -88,51 +110,11 @@ export default function CarAdvertisementList({
     window.history.pushState(null, '', `?${params.toString()}`);
   };
 
-  const handleBrandSelect = async (value: string) => {
-    const carAdvertisements = await fetch(
-      'http://128.199.31.140:8477' + endpoints.carModels + `?company_id=${value}`,
-      {
-        headers: {
-          'Accept-Language': locale,
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    const res = await carAdvertisements.json();
-    setCarModels(
-      res.map((model: { id: string; name: string }) => ({
-        label: model.name,
-        value: model.id.toString(),
-      })),
-    );
-  };
-
-  const requestAd = async () => {
-    setAdsLoading(true);
-    setModalState(false);
-    const carAdvertisements = await fetch(
-      'http://128.199.31.140:8477' +
-        endpoints.carAdvertisements +
-        objectToUrlParams(filters) +
-        (sort ? `&sort=${sort}` : '') +
-        (brand ? `&company_id=${brand}` : '') +
-        (model ? `&car_model_id=${model}` : ''),
-      {
-        headers: {
-          'Accept-Language': locale,
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    const res = await carAdvertisements.json();
-    setCarAds(res.results);
-    setAdsLoading(false);
-  };
-
   return (
     <Flex direction="column" gap="2" pb={20}>
       <Flex gapX={2}>
         <AppSelect
+          value={brand ? [brand] : []}
           options={carBrands.map((brand) => ({
             label: brand.name,
             value: brand.id.toString(),
@@ -141,18 +123,33 @@ export default function CarAdvertisementList({
           placeholder={t('choose-brand')}
           onChange={async (_key, value) => {
             setBrand(value);
-            await handleBrandSelect(value);
+            setModel(undefined);
+            const params = new URLSearchParams(window.location.search);
+            params.delete('car_model_id');
+            if (value) params.set('company_id', value);
+            else params.delete('company_id');
+            window.history.pushState(null, '', `?${params.toString()}`);
           }}
           filterKey={'company_id'}
           clearable
         />
         <AppSelect
-          options={carModels}
+          value={model ? [model] : []}
+          options={
+            carModels?.map((model) => ({
+              label: model.name,
+              value: model.id.toString(),
+            })) ?? []
+          }
           placeholder={t('choose-model')}
           className="w-full"
-          disabled={!carModels.length || !brand}
+          disabled={!carModelsFetched || !brand}
           onChange={async (_key, value) => {
             setModel(value);
+            const params = new URLSearchParams(window.location.search);
+            if (value) params.set('car_model_id', value);
+            else params.delete('car_model_id');
+            window.history.pushState(null, '', `?${params.toString()}`);
           }}
           filterKey={'car_model_id'}
           clearable
@@ -369,8 +366,6 @@ export default function CarAdvertisementList({
                       sunroof: undefined,
                     });
                     window.history.replaceState(null, '', window.location.pathname);
-                    await requestAd();
-                    setModalState(false);
                   }}
                   variant="outline"
                 >
@@ -379,7 +374,13 @@ export default function CarAdvertisementList({
                 <Button className="grow" onClick={() => setModalState(false)} variant="outline">
                   {t('cancel')}
                 </Button>
-                <Button className="grow" onClick={requestAd}>
+                <Button
+                  className="grow"
+                  onClick={() => {
+                    setSwitcher((prev) => !prev);
+                    setModalState(false);
+                  }}
+                >
                   {t('apply')}
                 </Button>
               </div>
@@ -399,14 +400,14 @@ export default function CarAdvertisementList({
           filterKey="sort"
         />
       </div>
-      {adsLoading ? (
+      {carAdsLoading && !carAdsFromQuery ? (
         <Flex className="mt-4 w-full justify-center">
           <ProgressCircleRoot value={null} size="sm">
             <ProgressCircleRing cap="round" />
           </ProgressCircleRoot>
         </Flex>
       ) : (
-        carAds?.map((ad) => (
+        carAdsFromQuery?.map((ad) => (
           <Card.Root
             onClick={() => router.push('/cars/' + ad.id)}
             key={ad.id}

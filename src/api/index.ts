@@ -8,16 +8,16 @@ import {
 import type { IPagination } from '@/interfaces/common';
 import { fetchServer } from '@/api/fetchServer';
 
-export type GetCarAdsParams = {
-  body_type?: string;
-};
-
-export const getCarAdvertisements = async ({ params }: { params?: GetCarAdsParams }) => {
+export const getCarAdvertisements = async ({
+  params,
+}: {
+  params?: Record<string, string | undefined>;
+}) => {
   try {
     const response = await fetchServer(endpoints.carAdvertisements, {
       params,
     });
-    return response as Promise<IPagination<CarAdvertisementResponse>>;
+    return response.results as Promise<CarAdvertisementResponse[]>;
   } catch (error) {
     console.error(error);
     throw new Response('Server error', { status: 500 });
@@ -34,9 +34,11 @@ export const getCarAdvertisementDetail = async (adId: string) => {
   }
 };
 
-export const getCarModels = async () => {
+export const getCarModels = async (company_id: string | undefined) => {
   try {
-    const response = await fetchServer(endpoints.carModels);
+    const response = await fetchServer(endpoints.carModels, {
+      params: { company_id },
+    });
     return response as Promise<CarModelsResponse>;
   } catch (error) {
     console.error(error);

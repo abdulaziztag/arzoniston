@@ -1,6 +1,4 @@
-import process from 'process';
-
-export const BASE_URL = process.env.API_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const endpoints = {
   carAdvertisements: `/car/car-advertisements/`,

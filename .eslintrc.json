@@ -1,5 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript", "eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "extends": ["plugin:@tanstack/eslint-plugin-query", "next/core-web-vitals", "next/typescript", "eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",

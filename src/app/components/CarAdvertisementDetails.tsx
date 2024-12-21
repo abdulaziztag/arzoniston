@@ -6,6 +6,7 @@ import { InfoItem } from '@/app/components/info-item';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
 import { formatWithSpaces } from '@/helpers/numParcer';
+import NextImage from 'next/image';
 
 export const CarAdvertisementDetails = ({
   carAdvertisement,
@@ -25,14 +26,14 @@ export const CarAdvertisementDetails = ({
       </Heading>
       <Flex className="gap-x-2 overflow-auto rounded-lg pb-4">
         {carAdvertisement.images.map((image) => (
-          <Image
-            height={400}
-            rounded="lg"
-            className="border-2 border-solid border-white dark:border-gray-800"
+          <div
             key={image.id}
-            src={image.image}
-            alt={image.id.toString()}
-          />
+            className="relative aspect-video w-8/12 shrink-0 border-2 border-solid border-white pb-4 dark:border-gray-800"
+          >
+            <Image asChild rounded="lg">
+              <NextImage fill src={image.image} alt={image.id.toString()} />
+            </Image>
+          </div>
         ))}
       </Flex>
       <Card.Root className="space-y-2 rounded p-4 shadow-md">

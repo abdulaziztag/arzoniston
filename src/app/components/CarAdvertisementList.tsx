@@ -4,6 +4,7 @@ import { Flex, Card, Image, Icon, Input } from '@chakra-ui/react';
 import { CarAdvertisementResponse, CommonName } from '@/api/types';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
+import NextImage from 'next/image';
 import { formatTimeDifference } from '@/helpers/dateDiff';
 import {
   BODY_TYPE_SELECT,
@@ -116,8 +117,8 @@ export default function CarAdvertisementList({
   };
 
   return (
-    <Flex direction="column" gap="2" pb={20}>
-      <Flex gapX={2}>
+    <Flex direction="column" alignItems="center" gap="2" pb={20}>
+      <Flex gapX={2} className="w-full">
         <AppSelect
           value={brand ? [brand] : []}
           options={carBrands.map((brand) => ({
@@ -416,7 +417,7 @@ export default function CarAdvertisementList({
           <Card.Root
             onClick={() => router.push('/cars/' + ad.id)}
             key={ad.id}
-            className="transition-all hover:cursor-pointer hover:bg-gray-900"
+            className="w-fit transition-all hover:cursor-pointer hover:bg-gray-900"
           >
             <Card.Header>
               <Card.Title>
@@ -429,13 +430,15 @@ export default function CarAdvertisementList({
             <Card.Body>
               <Flex className="gap-x-2 overflow-auto rounded-lg pb-4">
                 {ad.image && (
-                  <Image
-                    key={ad.image}
-                    height={52}
-                    className="aspect-video rounded-lg border-2 border-solid border-white dark:border-gray-800"
-                    src={ad.image}
-                    alt={`${ad.company_name} ${ad.car_model_name}`}
-                  />
+                  <Image asChild key={ad.image}>
+                    <NextImage
+                      width={400}
+                      height={400}
+                      className="aspect-video rounded-lg border-2 border-solid border-white dark:border-gray-800"
+                      src={ad.image}
+                      alt={`${ad.company_name} ${ad.car_model_name}`}
+                    />
+                  </Image>
                 )}
               </Flex>
               <Flex gap="2" wrap="wrap" className="&[span]:capitalize">

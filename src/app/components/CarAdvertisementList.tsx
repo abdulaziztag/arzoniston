@@ -44,6 +44,7 @@ export default function CarAdvertisementList({
   carPlaces: CommonName[];
 }) {
   const searchParams = useSearchParams();
+  const locale = useLocale();
   const router = useRouter();
   const [modalState, setModalState] = useState(false);
   const [brand, setBrand] = useState<string | undefined>(
@@ -82,6 +83,7 @@ export default function CarAdvertisementList({
     queryFn: () =>
       getCarAdvertisements({
         params: { ...filters, sort: sort, company_id: brand, car_model_id: model },
+        locale,
       }),
     initialData: carAdvertisements,
     refetchOnMount: false,
@@ -89,7 +91,10 @@ export default function CarAdvertisementList({
 
   const { data: carModels, isFetched: carModelsFetched } = useQuery({
     queryKey: ['carModels', brand],
-    queryFn: () => getCarModels(brand),
+    queryFn: () =>
+      getCarModels(brand, {
+        locale,
+      }),
     enabled: brand !== undefined,
   });
 

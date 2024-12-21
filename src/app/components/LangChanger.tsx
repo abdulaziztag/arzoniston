@@ -10,12 +10,14 @@ import {
 import { createListCollection } from '@ark-ui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/routing';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const LangChanger = () => {
   const t = useTranslations();
   const routing = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
+  const queryClient = useQueryClient();
 
   return (
     <SelectRoot defaultValue={[locale]} className="flex w-fit flex-row" collection={languages}>
@@ -27,7 +29,10 @@ export const LangChanger = () => {
           <SelectItem
             item={movie}
             key={movie.value}
-            onClick={() => routing.replace({ pathname }, { locale: movie.value })}
+            onClick={() => {
+              routing.replace({ pathname }, { locale: movie.value });
+              void queryClient.invalidateQueries();
+            }}
           >
             {movie.label}
           </SelectItem>

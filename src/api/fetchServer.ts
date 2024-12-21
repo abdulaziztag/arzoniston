@@ -3,7 +3,7 @@ import { BASE_URL } from '@/api/endpoints';
 
 export const fetchServer = async (
   url: string,
-  options: RequestInit & { params?: Record<string, string | undefined> } = {},
+  options: RequestInit & { params?: Record<string, string | undefined>; locale?: string } = {},
 ) => {
   try {
     const queryString = objectToUrlParams(options.params ?? {});
@@ -11,7 +11,7 @@ export const fetchServer = async (
       ...options,
       headers: {
         ...options.headers,
-        'Accept-Language': 'uz',
+        'Accept-Language': options?.locale ?? 'uz',
         'Content-Type': 'application/json',
       },
     };

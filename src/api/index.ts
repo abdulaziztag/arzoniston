@@ -5,17 +5,19 @@ import {
   CarBrandsResponse,
   CarModelsResponse,
 } from '@/api/types';
-import type { IPagination } from '@/interfaces/common';
 import { fetchServer } from '@/api/fetchServer';
 
 export const getCarAdvertisements = async ({
   params,
+  locale,
 }: {
   params?: Record<string, string | undefined>;
+  locale?: string;
 }) => {
   try {
     const response = await fetchServer(endpoints.carAdvertisements, {
       params,
+      locale,
     });
     return response.results as Promise<CarAdvertisementResponse[]>;
   } catch (error) {
@@ -24,9 +26,18 @@ export const getCarAdvertisements = async ({
   }
 };
 
-export const getCarAdvertisementDetail = async (adId: string) => {
+export const getCarAdvertisementDetail = async (
+  adId: string,
+  {
+    locale,
+  }: {
+    locale?: string;
+  },
+) => {
   try {
-    const response = await fetchServer(endpoints.advertisementDetail(adId));
+    const response = await fetchServer(endpoints.advertisementDetail(adId), {
+      locale,
+    });
     return response as Promise<CarAdvertisementDetailResponse>;
   } catch (error) {
     console.error(error);
@@ -34,10 +45,18 @@ export const getCarAdvertisementDetail = async (adId: string) => {
   }
 };
 
-export const getCarModels = async (company_id: string | undefined) => {
+export const getCarModels = async (
+  company_id: string | undefined,
+  {
+    locale,
+  }: {
+    locale?: string;
+  },
+) => {
   try {
     const response = await fetchServer(endpoints.carModels, {
       params: { company_id },
+      locale,
     });
     return response as Promise<CarModelsResponse>;
   } catch (error) {
@@ -46,9 +65,11 @@ export const getCarModels = async (company_id: string | undefined) => {
   }
 };
 
-export const getCarBrands = async () => {
+export const getCarBrands = async ({ locale }: { locale?: string }) => {
   try {
-    const response = await fetchServer(endpoints.carBrands);
+    const response = await fetchServer(endpoints.carBrands, {
+      locale,
+    });
     return response as Promise<CarBrandsResponse>;
   } catch (error) {
     console.error(error);
@@ -56,9 +77,11 @@ export const getCarBrands = async () => {
   }
 };
 
-export const getPlaces = async () => {
+export const getPlaces = async ({ locale }: { locale?: string }) => {
   try {
-    const response = await fetchServer(endpoints.places);
+    const response = await fetchServer(endpoints.places, {
+      locale,
+    });
     return response as Promise<CarBrandsResponse>;
   } catch (error) {
     console.error(error);

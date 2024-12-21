@@ -105,6 +105,7 @@ export const SelectRoot = React.forwardRef<HTMLDivElement, ChakraSelect.RootProp
         {...props}
         ref={ref}
         positioning={{ sameWidth: true, ...props.positioning }}
+        className="border-gray-400 hover:border"
       >
         {props.asChild ? (
           props.children
